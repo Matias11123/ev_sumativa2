@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ genero.nombre_genero }}{% endblock %}
+
+{% block content %}
+{% if genero %}
+    <h2 class="mb-3">Películas de {{ genero.nombre_genero }}</h2>
+    <p class="text-muted">{{ genero.descripcion }}</p>
+
+    <div class="row mt-4">
+        {% for pelicula in genero.peliculas %}
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <img src="{% static pelicula.imagen %}" class="card-img-top" alt="{{ pelicula.nombre }}" style="height: 300px; object-fit: cover;">
+                <div class="card-body">
+                    <h4 class="card-title">{{ pelicula.nombre }}</h4>
+                    <p class="card-text">
+                        <span class="badge bg-warning text-dark">Clasificación: {{ pelicula.edad }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <a href="{% url 'home:inicio' %}" class="btn btn-secondary mt-3">← Volver al Inicio</a>
+{% else %}
+    <div class="alert alert-danger">El género solicitado no existe.</div>
+{% endif %}
+{% endblock %}
